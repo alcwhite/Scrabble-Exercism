@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj": {}
+    "/Users/alwhite/Exercism/csharp/scrabble-score/scrabble-score.csproj": {}
   },
   "projects": {
-    "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj": {
+    "/Users/alwhite/Exercism/csharp/scrabble-score/scrabble-score.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj",
-        "projectName": "ScrabbleScore",
-        "projectPath": "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj",
+        "projectUniqueName": "/Users/alwhite/Exercism/csharp/scrabble-score/scrabble-score.csproj",
+        "projectName": "scrabble-score",
+        "projectPath": "/Users/alwhite/Exercism/csharp/scrabble-score/scrabble-score.csproj",
         "packagesPath": "/Users/alwhite/.nuget/packages/",
         "outputPath": "/Users/alwhite/Exercism/csharp/scrabble-score/obj/",
         "projectStyle": "PackageReference",
@@ -35,20 +35,6 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
-          "dependencies": {
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[16.3.0, )"
-            },
-            "xunit": {
-              "target": "Package",
-              "version": "[2.4.1, )"
-            },
-            "xunit.runner.visualstudio": {
-              "target": "Package",
-              "version": "[2.4.1, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
