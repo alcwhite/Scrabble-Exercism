@@ -27,7 +27,7 @@ namespace scrabble_score.Controllers
             } 
             else if (i.SpecialLetter && !i.SpecialWord) 
             {
-                return ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName);
+                return i.Word.Contains(i.LetterName) ? ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName) : ScrabbleScore.Score(i.Word);
             } 
             else if (!i.SpecialLetter && i.SpecialWord)
             {
@@ -35,7 +35,7 @@ namespace scrabble_score.Controllers
             } 
             else
             {
-                return ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName), i.WordType);
+                return i.Word.Contains(i.LetterName) ? ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName), i.WordType) : ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(i.Word), i.WordType);
             }
         }
     }
