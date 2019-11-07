@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace scrabble_score.Controllers
 {
     [ApiController]
-    [Route("[controller")]
+    [Route("[controller]")]
     public class ScrabbleScoreController : ControllerBase
     {
         private readonly ILogger<ScrabbleScoreController> _logger;
@@ -19,23 +19,23 @@ namespace scrabble_score.Controllers
         }
 
         [HttpGet]
-        public int GetScore(string word, bool specialLetter = false, char letterName = '/', string letterType = "", bool specialWord = false, string wordType = "")
+        public int Get([FromBody] Input i)
         {
-            if (!specialLetter && !specialWord)
+            if (!i.SpecialLetter && !i.SpecialWord)
             {
-                return ScrabbleScore.Score(word);
+                return ScrabbleScore.Score(i.Word);
             } 
-            else if (specialLetter && !specialWord)
+            else if (i.SpecialLetter && !i.SpecialWord) 
             {
-                return ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(word), letterType, letterName);
+                return ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName);
             } 
-            else if (!specialLetter && specialWord)
+            else if (!i.SpecialLetter && i.SpecialWord)
             {
-                return ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(word), wordType);
+                return ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(i.Word), i.WordType);
             } 
             else
             {
-                return ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(word), letterType, letterName), wordType);
+                return ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterName), i.WordType);
             }
         }
     }
