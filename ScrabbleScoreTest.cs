@@ -1,6 +1,7 @@
 // This file was auto-generated based on version 1.1.0 of the canonical data.
 
 using Xunit;
+using System.Collections.Generic;
 
 public class ScrabbleScoreTest
 {
@@ -74,13 +75,13 @@ public class ScrabbleScoreTest
     [Fact]
     public void Double_letter()
     {
-        Assert.Equal(9, scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "double", 'n'));
+        Assert.Equal(9, scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "double", new List<char>{'n'}));
     }
     
     [Fact]
     public void Triple_letter()
     {
-        Assert.Equal(10, scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "Triple", 'n'));
+        Assert.Equal(10, scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "Triple", new List<char>{'n'}));
     }
 
     [Fact]
@@ -98,7 +99,7 @@ public class ScrabbleScoreTest
     [Fact]
     public void Special_word_and_letter()
     {
-        Assert.Equal(27, scrabble_score.ScrabbleScore.SpecialWordScore(scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "double", 'n'), "triple"));
+        Assert.Equal(30, scrabble_score.ScrabbleScore.SpecialWordScore(scrabble_score.ScrabbleScore.SpecialLetterScore(scrabble_score.ScrabbleScore.Score("pinata"), "double", new List<char>{'n', 't'}), "triple"));
     }
 
     [Fact]

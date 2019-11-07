@@ -33,21 +33,44 @@ namespace scrabble_score
             
             return score;
         }
-        public static int SpecialLetterScore(int score, string type, char letter) 
+        public static int SpecialLetterScore(int score, string type, List<char> letters, int number = 1) 
         {
             type = type.ToLower();
+            int finalScore = score;
+            int addScore = 0;
 
-            int finalScore = type == "double" ? score + letterValues(letter) : type == "triple" ? score + (2 * letterValues(letter)): score;
-
-            return finalScore;
+            if (number == 1 || number == 2)
+            {
+                if (type == "double")  
+                {
+                    letters.ForEach(letter => addScore += letterValues(letter));
+                }
+                else if (type == "triple")
+                {
+                    letters.ForEach((letter) => addScore += (2 * letterValues(letter)));
+                }
+            }
+            else if (number == 3) {
+                if (type == "double")
+                {
+                    letters.ForEach(letter => addScore += letterValues(letter));
+                }
+            }
+            
+            return score + addScore;
             
         }
-        public static int SpecialWordScore(int score, string type) 
+        public static int SpecialWordScore(int score, string type, int number = 1) 
         {
             type = type.ToLower();
+            int finalScore = score;
             
-            int finalScore = type == "double" ? score * 2 : type == "triple" ? score * 3 : score;
-
+            if (number == 1) {
+                finalScore = type == "double" ? score * 2 : type == "triple" ? score * 3 : score;
+            }
+            else if (number == 2) {
+                finalScore = type == "double" ? score * 4 : type == "triple" ? score * 3 : score;
+            }
             return finalScore;
         }
     }
