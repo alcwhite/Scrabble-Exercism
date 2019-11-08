@@ -33,44 +33,37 @@ namespace scrabble_score
             
             return score;
         }
-        public static int SpecialLetterScore(int score, string type, List<char> letters, int number = 1) 
+        public static int SpecialLetterScore(int score, string word, string type, IEnumerable<char> letters, int num = 1) 
         {
             type = type.ToLower();
-            int finalScore = score;
             int addScore = 0;
 
-            if (number == 1 || number == 2)
-            {
-                if (type == "double")  
+            if (num == letters.Count())
+                if (type == "double" && num > 0 && num <= 3)  
                 {
-                    letters.ForEach(letter => addScore += letterValues(letter));
+                    foreach (var letter in letters)
+                        addScore += word.Contains(letter) ? letterValues(letter) : 0;
+
                 }
-                else if (type == "triple")
+                else if (type == "triple" && num < 3 && num > 0)
                 {
-                    letters.ForEach((letter) => addScore += (2 * letterValues(letter)));
+                    foreach (var letter in letters)
+                        addScore += word.Contains(letter) ? (2 * letterValues(letter)) : 0;
                 }
-            }
-            else if (number == 3) {
-                if (type == "double")
-                {
-                    letters.ForEach(letter => addScore += letterValues(letter));
-                }
-            }
             
             return score + addScore;
             
         }
-        public static int SpecialWordScore(int score, string type, int number = 1) 
+        public static int SpecialWordScore(int score, string type, int num = 1) 
         {
             type = type.ToLower();
             int finalScore = score;
             
-            if (number == 1) {
+            if (num == 1)
                 finalScore = type == "double" ? score * 2 : type == "triple" ? score * 3 : score;
-            }
-            else if (number == 2) {
+            else if (num == 2)
                 finalScore = type == "double" ? score * 4 : type == "triple" ? score * 3 : score;
-            }
+
             return finalScore;
         }
     }

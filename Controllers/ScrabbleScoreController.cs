@@ -22,30 +22,13 @@ namespace scrabble_score.Controllers
         public int Get([FromBody] Input i)
         {
             if (!i.SpecialLetter && !i.SpecialWord)
-            {
-                return ScrabbleScore.Score(i.Word);
-            } 
+                return ScrabbleScore.Score(i.Word); 
             else if (i.SpecialLetter && !i.SpecialWord) 
-            {
-                int score = 0;
-                i.LetterNames.ForEach((letter) => {
-                    var e = i.Word.Contains(letter) ? score = ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterNames, i.LetterCount = 1) : score = ScrabbleScore.Score(i.Word);
-                });
-                      
-                return score;
-            } 
+                return ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.Word, i.LetterType, i.LetterNames, i.LetterCount);
             else if (!i.SpecialLetter && i.SpecialWord)
-            {
-                return ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(i.Word), i.WordType, i.WordCount = 1);
-            } 
+                return ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(i.Word), i.WordType, i.WordCount);
             else
-            {
-                int score = 0;
-                i.LetterNames.ForEach((letter) => {
-                    var e = i.Word.Contains(letter) ? score = ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.LetterType, i.LetterNames, i.LetterCount = 1), i.WordType, i.WordCount = 1) : score = ScrabbleScore.SpecialWordScore(ScrabbleScore.Score(i.Word), i.WordType, i.WordCount = 1);
-                });
-                return score;
-            }
+                return ScrabbleScore.SpecialWordScore(ScrabbleScore.SpecialLetterScore(ScrabbleScore.Score(i.Word), i.Word, i.LetterType, i.LetterNames, i.LetterCount), i.WordType, i.WordCount);
         }
     }
 }
