@@ -59,9 +59,15 @@ namespace scrabble_score
             int starty = start.Item1;
             int startx = start.Item2;
             var squares = new List<Tuple<int, string>>();
+            string lettersWord = "";
             foreach (char letter in word)
             {
-                squares.Add(SquareValue(word, letter, start, direction));
+                lettersWord += char.IsLetter(letter) ? letter : (char?)null;
+            }
+            foreach (char letter in lettersWord)
+            {
+                char.IsLetter(letter);
+                squares.Add(SquareValue(lettersWord, letter, start, direction));
             }
             
             return squares;
