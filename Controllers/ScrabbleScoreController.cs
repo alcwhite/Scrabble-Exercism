@@ -39,7 +39,7 @@ namespace scrabble_score.Controllers
         // {
         //     return SpecialWordScore(SpecialLetterScore(Score(word), word, letterType, letters), wordType, count);
         // }
-        [Route("/{word}/{startx}/{starty}/{direction}")]
+        [Route("/{word}/x{startx?}/y{starty?}/{direction?}")]
         public int Get(string word, int startx = 8, int starty = 8, string direction = "across")
         {
             return Score(word, new Tuple<int, int> (starty, startx), direction);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Specialized;
 
 namespace scrabble_score
 {
@@ -37,17 +36,22 @@ namespace scrabble_score
 
         public static int Score(string word, Tuple<int, int> start, string direction)
         {
-            var squares = GetSquares(word, start, direction);
+            word = word.ToLower();
             int score = 0;
             int multiplier = 1;
+
+            bool possible = Possible(word, start, direction);
+            if (!possible)
+                return 0;
+
+            var squares = GetSquares(word, start, direction);
             foreach (var square in squares)
             {
                 score += square.Item1;
                 multiplier *= square.Item2 == "double word" ? 2 : square.Item2 == "triple word" ? 3 : 1;
             }
-            bool possible = Possible(word, start, direction);
 
-            return possible ? score * multiplier : 0;
+            return score * multiplier;
         }
 
         public static List<Tuple<int, string>> GetSquares(string word, Tuple<int, int> start, string direction)
