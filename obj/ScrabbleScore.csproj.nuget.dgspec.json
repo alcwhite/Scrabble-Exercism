@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj": {}
+    "c:\\Users\\theth\\Desktop\\Practice\\Scrabble-Exercism\\ScrabbleScore.csproj": {}
   },
   "projects": {
-    "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj": {
+    "c:\\Users\\theth\\Desktop\\Practice\\Scrabble-Exercism\\ScrabbleScore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj",
+        "projectUniqueName": "c:\\Users\\theth\\Desktop\\Practice\\Scrabble-Exercism\\ScrabbleScore.csproj",
         "projectName": "ScrabbleScore",
-        "projectPath": "/Users/alwhite/Exercism/csharp/scrabble-score/ScrabbleScore.csproj",
-        "packagesPath": "/Users/alwhite/.nuget/packages/",
-        "outputPath": "/Users/alwhite/Exercism/csharp/scrabble-score/obj/",
+        "projectPath": "c:\\Users\\theth\\Desktop\\Practice\\Scrabble-Exercism\\ScrabbleScore.csproj",
+        "packagesPath": "C:\\Users\\theth\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\theth\\Desktop\\Practice\\Scrabble-Exercism\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/alwhite/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\theth\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -36,6 +39,10 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.3.0, )"
@@ -67,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
