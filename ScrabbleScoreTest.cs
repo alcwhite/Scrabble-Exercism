@@ -72,11 +72,11 @@ public class ScrabbleScoreTest
         Assert.Equal(0, scrabble_score.ScrabbleScore.Score("[", new Tuple<int, int>(8, 8), "across"));
     }
 
-    // [Fact]
-    // public void Random_character_in_word()
-    // {
-    //     Assert.Equal(52, scrabble_score.ScrabbleScore.Score("Oxy-phen", new Tuple<int, int>(8, 8), "across"));
-    // }
+    [Fact]
+    public void Random_character_in_word()
+    {
+        Assert.Equal(52, scrabble_score.ScrabbleScore.Score("Oxy-phen", new Tuple<int, int>(8, 8), "across"));
+    }
 
     [Fact]
     public void Down()
@@ -84,7 +84,6 @@ public class ScrabbleScoreTest
         Assert.Equal(22, scrabble_score.ScrabbleScore.Score("apples", new Tuple<int, int>(8, 8), "across"));
     }
 
-    // failing and I don't know why -- doesn't like some repeated letters
     [Fact]
     public void Street()
     {

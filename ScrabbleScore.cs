@@ -38,15 +38,14 @@ namespace scrabble_score
         public static int Score(string word, Tuple<int, int> start, string direction)
         {
             word = word.ToLower();
-            List<char> validWord = word.Where(letter => values.ContainsKey(letter)) as List<char>;
             int score = 0;
             int multiplier = 1;
 
-            bool possible = Possible(validWord, start, direction);
+            bool possible = Possible(word, start, direction);
             if (!possible)
                 return 0;
 
-            var squares = GetSquares(validWord, start, direction);
+            var squares = GetSquares(word, start, direction);
             foreach (var square in squares)
             {
                 score += square.Item1;
@@ -56,19 +55,20 @@ namespace scrabble_score
             return score * multiplier;
         }
 
-        public static List<Tuple<int, string>> GetSquares(List<char> word, Tuple<int, int> start, string direction)
+        public static List<Tuple<int, string>> GetSquares(string word, Tuple<int, int> start, string direction)
         {
             var squares = new List<Tuple<int, string>>();
+            int add = 0;
             foreach (char letter in word)
-            {
-                squares.Add(SquareValue(word, letter, start, direction));
+            {   
+                squares.Add(SquareValue(letter, start, direction, add));
+                add++;
             }
             
             return squares;
         }
-        public static Tuple<int, string> SquareValue(List<char> word, char letter, Tuple<int, int> start, string direction)
+        public static Tuple<int, string> SquareValue(char letter, Tuple<int, int> start, string direction, int add)
         {
-            int add = word.IndexOf(letter);
             var square = direction == "across" ? new Tuple<int, int>(start.Item1, start.Item2 + add) : new Tuple<int, int>(start.Item1 + add, start.Item2);
             int value = LetterValues(letter);
             int multiplier = 1;
@@ -77,9 +77,11 @@ namespace scrabble_score
 
             return new Tuple<int, string>(value * multiplier, special);
         }
-        public static bool Possible(List<char> word, Tuple<int, int> start, string direction)
+        public static bool Possible(string word, Tuple<int, int> start, string direction)
         {
-            int length = word.Count;
+            IEnumerable<char> validChars = values.Keys;
+            IEnumerable<char> validWord = word.Where(letter => validChars.Contains(letter));
+            int length = word.Length;
             int startx = start.Item2;
             int starty = start.Item1;
             var finalSquare = finalCorner;
@@ -87,7 +89,7 @@ namespace scrabble_score
             int lasty = finalSquare.Item1;
             int endx = direction == "across" ? startx + length - 1 : startx;
             int endy = direction == "down" ? starty + length - 1 : starty;
-            return endx > lastx || endy > lasty || startx <= 0 || starty <= 0 || (direction != "across" && direction != "down") ? false : true;
+            return validWord.Count() != word.Length ||endx > lastx || endy > lasty || startx <= 0 || starty <= 0 || (direction != "across" && direction != "down") ? false : true;
         }
     }
 }
