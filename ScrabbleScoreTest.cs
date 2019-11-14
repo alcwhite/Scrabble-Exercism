@@ -75,7 +75,7 @@ public class ScrabbleScoreTest
     [Fact]
     public void Random_character_in_word()
     {
-        Assert.Equal(52, scrabble_score.ScrabbleScore.Score("Oxy-phen", new Tuple<int, int>(8, 8), "across"));
+        Assert.Equal(0, scrabble_score.ScrabbleScore.Score("Oxy-phen", new Tuple<int, int>(8, 8), "across"));
     }
 
     [Fact]
