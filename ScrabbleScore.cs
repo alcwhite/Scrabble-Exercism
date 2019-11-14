@@ -28,6 +28,8 @@ namespace scrabble_score
 
         static Tuple<int, int> finalCorner = new Tuple<int, int> (15, 15);
 
+        static List<string> directions = new List<string>{"across", "down"};
+
         private static int LetterValues(char letter)
         {   
             values.TryGetValue(letter, out int value);
@@ -81,6 +83,8 @@ namespace scrabble_score
         {
             IEnumerable<char> validChars = values.Keys;
             IEnumerable<char> validWord = word.Where(letter => validChars.Contains(letter));
+            bool isWordValid = validWord.Count() == word.Length;
+
             int length = word.Length;
             int startx = start.Item2;
             int starty = start.Item1;
@@ -89,7 +93,12 @@ namespace scrabble_score
             int lasty = finalSquare.Item1;
             int endx = direction == "across" ? startx + length - 1 : startx;
             int endy = direction == "down" ? starty + length - 1 : starty;
-            return validWord.Count() != word.Length ||endx > lastx || endy > lasty || startx <= 0 || starty <= 0 || (direction != "across" && direction != "down") ? false : true;
+            bool isYValid = endy <= lasty && starty > 0;
+            bool isXValid = endx<= lastx && startx > 0;
+
+            bool isDirectionValid = directions.Contains(direction);
+
+            return !isWordValid || !isYValid || !isXValid || !isDirectionValid ? false : true;
         }
     }
 }
