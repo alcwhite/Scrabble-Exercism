@@ -8,6 +8,7 @@ namespace scrabble_score
     {
         static Dictionary<char, int> values = new Dictionary<string, int>()
             {
+                {"_", 0},
                 {"aeioulnrst", 1},
                 {"dg", 2},
                 {"bcmp", 3},
@@ -37,14 +38,15 @@ namespace scrabble_score
         public static int Score(string word, Tuple<int, int> start, string direction)
         {
             word = word.ToLower();
+            List<char> validWord = word.Where(letter => values.ContainsKey(letter)) as List<char>;
             int score = 0;
             int multiplier = 1;
 
-            bool possible = Possible(word, start, direction);
+            bool possible = Possible(validWord, start, direction);
             if (!possible)
                 return 0;
 
-            var squares = GetSquares(word, start, direction);
+            var squares = GetSquares(validWord, start, direction);
             foreach (var square in squares)
             {
                 score += square.Item1;
@@ -54,34 +56,30 @@ namespace scrabble_score
             return score * multiplier;
         }
 
-        public static List<Tuple<int, string>> GetSquares(string word, Tuple<int, int> start, string direction)
+        public static List<Tuple<int, string>> GetSquares(List<char> word, Tuple<int, int> start, string direction)
         {
-            int starty = start.Item1;
-            int startx = start.Item2;
             var squares = new List<Tuple<int, string>>();
-
             foreach (char letter in word)
             {
-                char.IsLetter(letter);
                 squares.Add(SquareValue(word, letter, start, direction));
             }
             
             return squares;
         }
-        public static Tuple<int, string> SquareValue(string word, char letter, Tuple<int, int> start, string direction)
+        public static Tuple<int, string> SquareValue(List<char> word, char letter, Tuple<int, int> start, string direction)
         {
             int add = word.IndexOf(letter);
             var square = direction == "across" ? new Tuple<int, int>(start.Item1, start.Item2 + add) : new Tuple<int, int>(start.Item1 + add, start.Item2);
             int value = LetterValues(letter);
-            int multiply = 1;
+            int multiplier = 1;
             specialSquares.TryGetValue(square, out string special);
-            value *= special == "double letter" ? 2 : special == "triple letter" ? 3 : 1;
+            multiplier *= special == "double letter" ? 2 : special == "triple letter" ? 3 : 1;
 
-            return new Tuple<int, string>(value * multiply, special);
+            return new Tuple<int, string>(value * multiplier, special);
         }
-        public static bool Possible(string word, Tuple<int, int> start, string direction)
+        public static bool Possible(List<char> word, Tuple<int, int> start, string direction)
         {
-            int length = word.Length;
+            int length = word.Count;
             int startx = start.Item2;
             int starty = start.Item1;
             var finalSquare = finalCorner;
@@ -89,52 +87,7 @@ namespace scrabble_score
             int lasty = finalSquare.Item1;
             int endx = direction == "across" ? startx + length - 1 : startx;
             int endy = direction == "down" ? starty + length - 1 : starty;
-            return endx > lastx || endy > lasty || (direction != "across" && direction != "down") ? false : true;
+            return endx > lastx || endy > lasty || startx <= 0 || starty <= 0 || (direction != "across" && direction != "down") ? false : true;
         }
-
-        // {a, a1}
-
-
-        // public static int Score(string input)
-        // {
-        //     int score = 0;
-        //     string word = input.ToLower();
-
-        //     var scores = word.Select(c => LetterValues(c));
-
-        //     score = scores.Sum();
-            
-        //     return score;
-        // }
-        // public static int SpecialLetterScore(int score, string word, int type, IEnumerable<char> letters) 
-        // {
-        //     int addScore = 0;
-
-        //     if (type == 2)  
-        //     {
-        //         foreach (var letter in letters)
-        //             addScore += word.Contains(letter) ? LetterValues(letter) : 0;
-
-        //     }
-        //     else if (type == 3)
-        //     {
-        //         foreach (var letter in letters)
-        //             addScore += word.Contains(letter) ? (2 * LetterValues(letter)) : 0;
-        //     }
-            
-        //     return addScore;
-            
-        // }
-        // public static int SpecialWordScore(int score, int type, int num = 1) 
-        // {
-        //     int finalScore = score;
-            
-        //     if (num == 1)
-        //         finalScore = type == 2 ? score * 2 : type == 3 ? score * 3 : score;
-        //     else if (num == 2)
-        //         finalScore = type == 2 ? score * 4 : type == 3 ? score * 3 : score;
-
-        //     return finalScore;
-        // }
     }
 }
