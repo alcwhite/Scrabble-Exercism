@@ -19,7 +19,7 @@ namespace scrabble_score
         }.SelectMany(kv => kv.Key.Select(c => (c, kv.Value))).ToDictionary(kv => kv.c, kv => kv.Value);
         static Dictionary<Tuple<int, int>, string> specialSquares = new Dictionary<List<Tuple<int, int>>, string>()
         {
-            // (y -- down, x -- across)
+            // (y -- down, x -- across) -- starts at top left corner
             {new List<Tuple<int, int>>{new Tuple<int, int>(1, 1), new Tuple<int, int>(1, 8), new Tuple<int, int>(1, 15), new Tuple<int, int>(8, 1), new Tuple<int, int>(8, 15), new Tuple<int, int>(15, 1), new Tuple<int, int>(15, 8), new Tuple<int, int>(15, 15)}, "triple word"},
             {new List<Tuple<int, int>>{new Tuple<int, int>(2, 2), new Tuple<int, int>(2, 14), new Tuple<int, int>(3, 3), new Tuple<int, int>(3, 13), new Tuple<int, int>(4, 4), new Tuple<int, int>(4, 12), new Tuple<int, int>(5, 5), new Tuple<int, int>(5, 11), new Tuple<int, int>(8, 8), new Tuple<int, int>(11, 5), new Tuple<int, int>(11, 11), new Tuple<int, int>(12, 4), new Tuple<int, int>(12, 12), new Tuple<int, int>(13, 3), new Tuple<int, int>(13, 13), new Tuple<int, int>(14, 2), new Tuple<int, int>(14, 14)}, "double word"},
             {new List<Tuple<int, int>>{new Tuple<int, int>(2, 6), new Tuple<int, int>(2, 10), new Tuple<int, int>(6, 2), new Tuple<int, int>(6, 6), new Tuple<int, int>(6, 10), new Tuple<int, int>(6, 14), new Tuple<int, int>(10, 2), new Tuple<int, int>(10, 6), new Tuple<int, int>(10, 10), new Tuple<int, int>(10, 14), new Tuple<int, int>(14, 6), new Tuple<int, int>(14, 10)}, "triple letter"},
@@ -57,7 +57,7 @@ namespace scrabble_score
             return score * multiplier;
         }
 
-        public static List<Tuple<int, string>> GetSquares(string word, Tuple<int, int> start, string direction)
+        private static List<Tuple<int, string>> GetSquares(string word, Tuple<int, int> start, string direction)
         {
             var squares = new List<Tuple<int, string>>();
             int add = 0;
@@ -69,7 +69,7 @@ namespace scrabble_score
             
             return squares;
         }
-        public static Tuple<int, string> SquareValue(char letter, Tuple<int, int> start, string direction, int add)
+        private static Tuple<int, string> SquareValue(char letter, Tuple<int, int> start, string direction, int add)
         {
             var square = direction == "across" ? new Tuple<int, int>(start.Item1, start.Item2 + add) : new Tuple<int, int>(start.Item1 + add, start.Item2);
             int value = LetterValues(letter);
@@ -79,7 +79,7 @@ namespace scrabble_score
 
             return new Tuple<int, string>(value * multiplier, special);
         }
-        public static bool Possible(string word, Tuple<int, int> start, string direction)
+        private static bool Possible(string word, Tuple<int, int> start, string direction)
         {
             IEnumerable<char> validChars = values.Keys;
             IEnumerable<char> validWord = word.Where(letter => validChars.Contains(letter));
